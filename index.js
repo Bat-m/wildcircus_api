@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   connection.query(
-    'SELECT * FROM users ORDER BY score DESC',
+    'SELECT * FROM users ORDER BY convert(`score`, decimal) DESC',
     (err, results) => {
       if (err) {
         console.log(err);
