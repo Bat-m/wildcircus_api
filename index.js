@@ -17,22 +17,54 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  connection.query('SELECT * FROM user', (err, results) => {
+  connection.query(
+    'SELECT * FROM users ORDER BY score DESC',
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send('Impossible de recupérer les users');
+      } else {
+        res.json(results);
+      }
+    }
+  );
+});
+
+app.post('/login', (req, res) => {
+  const formData = req.body;
+  connection.query('INSERT INTO users SET ? ', formData, (err, results) => {
     if (err) {
       console.log(err);
-      res.status(500).send('Impossible de charger les compositions');
+      res.status(500).send('Impossible de se logger');
     } else {
       res.json(results);
     }
   });
 });
 
-app.post('/login', (req, res) => {
-  const formData = req.body;
-  connection.query('INSERT INTO user SET ? ', formData, (err, results) => {
+app.put('/score/:id', (req, res) => {
+  const { id } = req.params;
+  const { score } = req.body;
+  console.log(id);
+  connection.query(
+    'UPDATE users SET score=? WHERE id_user=?',
+    [score, id],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Impossible d'enregistres les scores");
+      } else {
+        res.json(results);
+      }
+    }
+  );
+});
+
+app.get('/ranking', (req, res) => {
+  connection.query('SELECT * FROM ranking ', (err, results) => {
     if (err) {
       console.log(err);
-      res.status(500).send('Impossible de charger les compositions');
+      res.status(500).send('Impossible de charger les classements');
     } else {
       res.json(results);
     }
