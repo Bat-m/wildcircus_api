@@ -1,4 +1,4 @@
 node_modules
 wild.sql
+config
 .env
-config.js
