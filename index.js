@@ -1,8 +1,7 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 5000;
-const connection = require('./config');
-const api = require('./src/routes');
+const api = require('./src');
 
 app.all('*', function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -18,17 +17,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api', api);
-
-// app.get('/ranking', (req, res) => {
-//   connection.query('SELECT * FROM ranking ', (err, results) => {
-//     if (err) {
-//       console.log(err);
-//       res.status(500).send('Impossible de charger les classements');
-//     } else {
-//       res.json(results);
-//     }
-//   });
-// });
 
 app.listen(PORT, err => {
   if (err) {

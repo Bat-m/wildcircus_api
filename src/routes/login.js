@@ -1,5 +1,5 @@
 const express = require('express');
-const connection = require('../../config');
+const connection = require('../config');
 var router = express.Router();
 
 router.post('/', (req, res) => {
