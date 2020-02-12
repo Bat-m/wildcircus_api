@@ -1,7 +1,7 @@
 const express = require('express');
-const login = require('./login');
-const ranking = require('./ranking');
-const score = require('./score');
+const login = require('./routes/login');
+const ranking = require('./routes/ranking');
+const score = require('./routes/score');
 
 const router = express.Router();
 
